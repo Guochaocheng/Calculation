@@ -13,8 +13,12 @@ Hello, GuoChaoCheng!
   <LI><A href="http://dailynews.sina.com/gb/">新浪新闻</A></LI>
   <LI><A href="https://weibo.com/">新浪微博</A></LI>
   
+  <style>
+    .Search-box{ width:100px; height:100px; boder:1px; solid:#000; float:left;}
+  </style>
+  <div class="Search-box">
   <!--form之间的表单元素,是和服务器交互的数据内容-->
-  <form name="fm1" action="url" method="post|get" enctype="multipart/form-data">
+  <form name="searchForm" action="url" method="post|get" enctype="multipart/form-data">
     用户名:<input type="text" name="uName" id="uName" value="请输入用户名"/><br/>
     密码：<input type="password" name="uPwd" id="uPwd">
   </form>
