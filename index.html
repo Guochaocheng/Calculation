@@ -1,34 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-cn">
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title> GuoChaocheng's Blog </title><META Name="keywords" Content="GCC"/>
+
+  <style>
+    .Search-box{ width:100px; height:100px; boder:1px; solid #000; float:left; color:red; position: absolute; top: 200px; left: 20px}
+	.favorites{
+				width: 150px;
+				height: 150px;
+				background-color: #5CBB44;
+				background-position:70px 0px;
+				margin-top: 20px;
+				padding-top: 20px;
+				position: absolute;
+				top:60px;
+				left:20px;
+				
+				#border: 2px solid red;
+				#border: 5px dashed red;
+				}
+	a:hover{
+				color: red;
+				background-color: #CCCCCC;
+				content: 666;
+	}
+	</style>
+
+	<script>
+	function show_info(){
+		var Reverse_string=document.searchForm.Reverse_input.value.toUpperCase();
+		alert(Reverse_string);
+		for(var i=0;i<=Reverse_string.length;i++){
+			if( Reverse_string.charAt(i) == "A"){
+				Reverse_string.CharAt(i) = "T";
+			}else if( Reverse_string.charAt(i) == "T"){
+				Reverse_string.charAt(i) = "A";
+			}else if( Reverse_string.charAt(i) == "G"){
+				Reverse_string.charAt(i) = "C";
+			}else if( Reverse_string.charAt(i) == "C"){
+				Reverse_string.charAt(i) = "G";
+			}
+			alert(Reverse_string.reverse());
+			document.searchForm.Reverse_output.value= Reverse_string.reverse();
+		}
+	</script>
+
 </head>
 
 <div id="header">
-  <h1>GCC's Blogs</h1>
+  <h1>GCC's Tools</h1>
  </div>
  
-<div id="nav">
-关注<br>
-分析<br>
-</div>
-
-  
-  <p>1</p>
-  <p>1</p>
-  <LI><A href="http://www.baidu.com">百度一下</A> </LI>
-  <LI><A href="http://dailynews.sina.com/gb/">新浪新闻</A></LI>
-  <LI><A href="https://weibo.com/">新浪微博</A></LI>
-  
-  <style>
-    .Search-box{ width:100px; height:100px; boder:1px; solid:#000; float:left; color:red;}
-  </style>
+<div class="favorites">
+<ul>
+<li><a href="https://www.zhihu.com" target="_blank">知乎</a></li>
+<li><a href="https://www.csdn.net/" target="_blank">CSDN</a></li>
+<li><a href="https://www.cnblogs.com/" target="_blanK">博客园</a></li>
+<li><A href="http://www.baidu.com" target="_blank">百度一下</A></li>
+<li><A href="http://dailynews.sina.com/gb/" target="_blank">新浪新闻</A></li>
+<li><A href="https://weibo.com/" target="_blank">新浪微博</A></li>
+ 
+ 
   <div class="Search-box">
   <!--form之间的表单元素,是和服务器交互的数据内容-->
   <form name="searchForm" action="url" method="post|get" enctype="multipart/form-data">
-    用户名:<input type="text" name="uName" id="uName" value="请输入用户名"/><br/>
-    密码：<input type="password" name="uPwd" id="uPwd">
+    输入序列:<textarea id="Reverse_input" name="Reverse_input" cols=80 rows=10 >请输入你要比对的序列</textarea>
+	输出序列:<textarea id="Reverse_output" name="Reverse_output" cols=80 rows=10></textarea>
+			 <input type="button" onclick="show_info()" value="确定"/>
+
   </form>
   
 </body>
