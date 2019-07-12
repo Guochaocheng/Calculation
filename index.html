@@ -29,20 +29,22 @@
 
 	<script type="text/javascript">
 	function show_info(){
-		var Reverse_string = document.getElementById("Reverse_input").value;
-		window.alert(Reverse_string);
+		var Reverse_string = document.getElementById("Reverse_input").value.toUpperCase();
+		var reverse_str = [];
+		/*window.alert(Reverse_string);*/
 		for(var i=0;i<=Reverse_string.length;i++){
 			if( Reverse_string.charAt(i) == "A"){
-				Reverse_string.CharAt(i) = "T";
+				reverse_str.push("T");
 			}else if( Reverse_string.charAt(i) == "T"){
-				Reverse_string.charAt(i) = "A";
+				reverse_str.push("A");
 			}else if( Reverse_string.charAt(i) == "G"){
-				Reverse_string.charAt(i) = "C";
+				reverse_str.push("C");
 			}else if( Reverse_string.charAt(i) == "C"){
-				Reverse_string.charAt(i) = "G";
+				reverse_str.push("G");
 			}
-			alert(Reverse_string.reverse());
-			document.searchForm.Reverse_output.value= Reverse_string.reverse();
+		}
+		/*alert(reverse_str);*/
+		document.getElementById("Reverse_output").value= reverse_str.reverse().join("");
 		}
 	</script>
 
@@ -68,7 +70,7 @@
   <form name="searchForm" action="url" method="post|get" enctype="multipart/form-data">
     输入序列:<textarea id="Reverse_input" style="width: 400px; height: 100px;" >请输入你要比对的序列</textarea>
 	输出序列:<textarea id="Reverse_output" style="width: 400px; height: 100px;" ></textarea>
-			 <input type="button" onclick="show_info()" value="确定"/>
+			 <input type="button" onclick="show_info()" value="反向互补"/>
 
   </form>
   
