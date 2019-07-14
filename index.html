@@ -4,49 +4,35 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title> GuoChaocheng's Blog </title><META Name="keywords" Content="GCC"/>
 
-  <style>
-    .Search-box{ width:100px; height:100px; boder:1px; solid #000; float:left; color:red; position: absolute; top: 200px; left: 20px}
-	.favorites{
-				width: 150px;
-				height: 150px;
-				background-color: #5CBB44;
-				background-position:70px 0px;
-				margin-top: 20px;
-				padding-top: 20px;
-				position: absolute;
-				top:60px;
-				left:20px;
-				
-				#border: 2px solid red;
-				#border: 5px dashed red;
+  <style type="text/css">
+    .reverse-box{ width:100px; height:100px; boder:1px; solid #000; float:left; color:red; position: absolute; top: 200px; left: 20px}
+	.favorites{ width: 150px; height: 150px; background-color: #5CBB44; background-position:70px 0px;
+				margin-top: 20px; padding-top: 20px; position: absolute; top:60px; left:20px;
 				}
-	a:hover{
-				color: red;
-				background-color: #CCCCCC;
-				content: 666;
-	}
-	</style>
+	a:hover{ color: red; background-color: #CCCCCC; }
 
-	<script type="text/javascript">
-	function show_info(){
-		var Reverse_string = document.getElementById("Reverse_input").value.toUpperCase();
-		var reverse_str = [];
-		/*window.alert(Reverse_string);*/
-		for(var i=0;i<=Reverse_string.length;i++){
-			if( Reverse_string.charAt(i) == "A"){
-				reverse_str.push("T");
-			}else if( Reverse_string.charAt(i) == "T"){
-				reverse_str.push("A");
-			}else if( Reverse_string.charAt(i) == "G"){
-				reverse_str.push("C");
-			}else if( Reverse_string.charAt(i) == "C"){
-				reverse_str.push("G");
-			}
+  </style>
+
+<script type="text/javascript">
+function show_info(){
+	var Reverse_string = document.getElementById("Reverse_input").value.toUpperCase();
+	var reverse_str = [];
+	/*window.alert(Reverse_string);*/
+	for(var i=0;i<=Reverse_string.length;i++){
+		if( Reverse_string.charAt(i) == "A"){
+			reverse_str.push("T");
+		}else if( Reverse_string.charAt(i) == "T"){
+			reverse_str.push("A");
+		}else if( Reverse_string.charAt(i) == "G"){
+			reverse_str.push("C");
+		}else if( Reverse_string.charAt(i) == "C"){
+			reverse_str.push("G");
 		}
-		/*alert(reverse_str);*/
-		document.getElementById("Reverse_output").value= reverse_str.reverse().join("");
-		}
-	</script>
+	}
+	/*alert(reverse_str);*/
+	document.getElementById("Reverse_output").value= reverse_str.reverse().join("");
+}
+</script>
 
 </head>
 
@@ -65,14 +51,69 @@
 <li><A href="https://weibo.com/" target="_blank">新浪微博</A></li>
  
  
-  <div class="Search-box">
+  <div class="reverse-box">
   <!--form之间的表单元素,是和服务器交互的数据内容-->
-  <form name="searchForm" action="url" method="post|get" enctype="multipart/form-data">
+	<form name="searchForm" action="url" method="post|get" enctype="multipart/form-data">
     输入序列:<textarea id="Reverse_input" style="width: 400px; height: 100px;" >请输入你要比对的序列</textarea>
 	输出序列:<textarea id="Reverse_output" style="width: 400px; height: 100px;" ></textarea>
 			 <input type="button" onclick="show_info()" value="反向互补"/>
+	</form>
+  </div>
 
-  </form>
+<script type="text/javascript">
+function PCR_calculate(){
+	var PCR_sequence = document.getElementById("PCR_input").value.toUpperCase();
+	var G_num=0;
+	var C_num=0;
+	var A_num=0;
+	var T_num=0;
+	/* if the sequence is empty, sed error. */
+	console.log(PCR_sequence);
+	if( PCR_sequence.length <1 ){	window.alert("The sequence can't be empty"); }
+	document.getElementById("PCR_length").value = PCR_sequence.length;
+	for(var i=0;i<=PCR_sequence.length;i++){
+		if( PCR_sequence.charAt(i) == "A"){
+				A_num++;
+		}else if( PCR_sequence.charAt(i) == "T" ){
+				T_num++;
+		}else if( PCR_sequence.charAt(i) == "C" ){
+				C_num++;
+		}else if( PCR_sequence.charAt(i) == "G" ){
+				G_num++;
+		}
+	}
+	document.getElementById("PCR_GC").value = (G_num+C_num)/(A_num+T_num+G_num+C_num)*100;
+	document.getElementById("PCR_OD").value = 1000000/(G_num*11.7+C_num*7.3+A_num*15.4+T_num*8.8);
+	document.getElementById("PCR_MW").value = 313.2*A_num+328.2*G_num+289.2*C_num+304.2*T_num-60.96;
+	if( PCR_sequence.length < 14){
+		document.getElementById("PCR_TM").value = 2*(A_num+T_num)+4*(G_num+C_num);
+	}
+	else{
+		document.getElementById("PCR_TM").value = 64.9+41*((G_num+C_num-16.4)/PCR_sequence.length);
+	}
+}
+</script>
+
+  <table border="3" cellspacing="0" style="position:absolute; width:400px; height:300px; top:200px; left:600px;" >
+	<tr>
+		<th colspan="2" align="middle">请在栏内输入核苷酸序列</th>
+	</tr>
+	<tr>
+		<td colspan="2" algin="middle"><textarea id="PCR_input" style="width:400px; height:100px;"></textarea></td>
+	</tr>
+	<tr>	
+		<td>序列长度:<input type="text" id="PCR_length" style="width:60px; height:20px"/>nt</td>
+		<td>退火温度(Tm):<input type="text" id="PCR_TM" style="width:60px; height:20px"/>℃</td>
+	</tr>
+	<tr>
+		<td>GC含量%:<input type="text" id="PCR_GC" style="width:60px; height:20px"/></td>
+		<td>分子量:<input type="text" id="PCR_MW" style="width:60px; height:20px"/>道尔顿(g/M)</td>
+	</tr>
+	<tr>
+		<td align="middle"><input type="button" onclick="PCR_calculate()" value="计算" style="FONT-SIZE:18pt; FONT-FAMILY:幼圆"/></td>
+		<td>1个OD260等于<input type="text" id="PCR_OD" style="width:60px; height:20px"/>P摩尔数</td>
+	</tr>
+  </table>
   
 </body>
 
