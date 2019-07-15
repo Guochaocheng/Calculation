@@ -4,12 +4,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title> GuoChaocheng's Blog </title><META Name="keywords" Content="GCC"/>
 
-  <style type="text/css">
-    .reverse-box{ width:100px; height:100px; boder:1px; solid #000; float:left; color:red; position: absolute; top: 200px; left: 20px}
-    .favorites{ width: 150px; height: 150px; background-color: #5CBB44; background-position:70px 0px;
-				margin-top: 20px; padding-top: 20px; position: absolute; top:60px; left:20px;}
+   <style type="text/css">
+    .MenuList{ width: 600px; height: 100px;  position: absolute; top:128px; left:100px;}
+    .reverse-box{ width:200px; height:100px; boder:1px; solid #000; float:left; position: absolute; top: 200px; left: 20px}
     a:hover{ color: red; background-color: #CCCCCC; }
-
+	#PCR_title{ width:300px; height: 100px; position: absolute; top: 200px; left:600px; }
+	ul{ list-style-type:none; }
+	li{ float:left; }
+	a{ width:80px; height:20px; padding:10px 0; text-align:center; background: #66cc66; display:block; }
   </style>
 
 <script type="text/javascript">
@@ -35,48 +37,58 @@ function show_info(){
 
 </head>
 
-<body background="./geren.jpg"; style="background-repeat:no-repeat; background-attachment:fixed; background-size: 100% 100%">
+<body background="./green.jpg"; style="background-repeat:no-repeat; background-attachment:fixed; background-size: 100% 100%">
 <div id="header">
   <h1>GCC's Tools</h1>
- </div>
+</div>
  
-<div class="favorites">
-<ul>
-<li><a href="https://www.zhihu.com" target="_blank">知乎</a></li>
-<li><a href="https://www.csdn.net/" target="_blank">CSDN</a></li>
+<div id="HeadPhoto">
+<img src="./headphoto.jpg" style="width:100px; height:100px;" />
+</div>
+
+<div class="MenuList">
+<ul id="menu_list" >
+<li><a href="https://guochaocheng.github.io" target="_self">首页</a></li>
+<li><a href="https://blog.csdn.net/weixin_43840576" target="_blank">CSDN</a></li>
 <li><a href="https://www.cnblogs.com/" target="_blanK">博客园</a></li>
-<li><A href="http://www.baidu.com" target="_blank">百度一下</A></li>
-<li><A href="http://dailynews.sina.com/gb/" target="_blank">新浪新闻</A></li>
-<li><A href="https://weibo.com/" target="_blank">新浪微博</A></li>
- 
- 
-  <div class="reverse-box">
-  <!--form之间的表单元素,是和服务器交互的数据内容-->
+<li><a href="http://www.baidu.com" target="_blank">百度一下</a></li>
+<li><a href="http://dailynews.sina.com/gb/" target="_blank">新浪新闻</a></li>
+<li><a href="https://weibo.com/" target="_blank">新浪微博</a></li>
+</ul>
+</div>
+
+<div class="reverse-box">
+<!--form之间的表单元素,是和服务器交互的数据内容-->
+<h3 id="reverse_title">01.序列反向互补工具</h3>
 	<form name="searchForm" action="url" method="post|get" enctype="multipart/form-data">
-    输入序列:<textarea id="Reverse_input" style="width: 400px; height: 100px;" >请输入你要比对的序列</textarea>
+	输入序列:<textarea id="Reverse_input" placeholder="请在此输入序列" style="width: 400px; height: 100px;" ></textarea>
 	输出序列:<textarea id="Reverse_output" style="width: 400px; height: 100px;" ></textarea>
-			 <input type="button" onclick="show_info()" value="反向互补"/>
+		<input type="button" onclick="show_info()" value="反向互补"/>
 	</form>
-  </div>
+</div>
 
 <script type="text/javascript">
 function PCR_calculate(){
 	var PCR_sequence = document.getElementById("PCR_input").value.toUpperCase();
-	var G_num=0; var C_num=0; var A_num=0; var T_num=0;
+	var G_num=0;
+	var C_num=0;
+	var A_num=0;
+	var T_num=0;
 	/* if the sequence is empty, sed error. */
+	console.log(PCR_sequence);
 	if( PCR_sequence.length <1 ){	
-		window.alert("The sequence can't be empty"); 
+		window.alert("The sequence can't be empty");
 	}else{
 		document.getElementById("PCR_length").value = PCR_sequence.length;
 		for(var i=0;i<=PCR_sequence.length;i++){
 			if( PCR_sequence.charAt(i) == "A"){
-				A_num++;
+					A_num++;
 			}else if( PCR_sequence.charAt(i) == "T" ){
-				T_num++;
+					T_num++;
 			}else if( PCR_sequence.charAt(i) == "C" ){
-				C_num++;
+					C_num++;
 			}else if( PCR_sequence.charAt(i) == "G" ){
-				G_num++;
+					G_num++;
 			}
 		}
 		document.getElementById("PCR_GC").value = (G_num+C_num)/(A_num+T_num+G_num+C_num)*100;
@@ -92,7 +104,8 @@ function PCR_calculate(){
 }
 </script>
 
-  <table border="3" cellspacing="0" style="position:absolute; width:400px; height:300px; top:200px; left:600px;" >
+  <h3 id="PCR_title">02.PCR引物(核苷酸)计算器</h3>
+  <table border="3" cellspacing="0" style="position:absolute; width:400px; height:300px; top:280px; left:600px;" >
 	<tr>
 		<th colspan="2" align="middle">请在栏内输入核苷酸序列</th>
 	</tr>
