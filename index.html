@@ -82,12 +82,9 @@ function show_info(){
 <script type="text/javascript">
 function PCR_calculate(){
 	var PCR_sequence = document.getElementById("PCR_input").value.toUpperCase();
-	var G_num=0;
-	var C_num=0;
-	var A_num=0;
-	var T_num=0;
+	var G_num=0; var C_num=0; var A_num=0; var T_num=0;
 	/* if the sequence is empty, sed error. */
-	console.log(PCR_sequence);
+	/*console.log(PCR_sequence);*/
 	if( PCR_sequence.length <1 ){	
 		window.alert("The sequence can't be empty");
 	}else{
