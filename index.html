@@ -14,9 +14,14 @@
     a{ width:80px; height:20px; padding:10px 0; text-align:center; background: #66cc66; display:block; }
     #search_box{ position: fixed; top: 128px; right:200px; }
     #id_compine_title{ width:300px; height: 100px; position: absolute; top: 200px; left:1200px; } 
+    #footer {	height: 30px; line-height: 40px; left: 0; position: fixed; bottom: 0; width: 100%; text-align: center; background: #333; color: #fff; font-family: Arial; font-size: 12px; letter-spacing: 1px; margin:0 auto;}
+		.bottom{position:absolute;left:0;right:0;bottom:0;height:80px;}
+		#main_content{padding-bottom: 60px;}
+		#wapper{position:relative; height:auto; min-height:100%; }
   </style>
 
 <script type="text/javascript">
+/* 01. Reverse sequence tools. */
 function show_info(){
 	var Reverse_string = document.getElementById("Reverse_input").value.toUpperCase();
 	var reverse_str = [];
@@ -35,57 +40,13 @@ function show_info(){
 	/*alert(reverse_str);*/
 	document.getElementById("Reverse_output").value= reverse_str.reverse().join("");
 }
-</script>
 
-</head>
-
-<body background="./img/green.jpg"; style="background-repeat:no-repeat; background-attachment:fixed; background-size: 100% 100%">
-<div id="header">
-  <h1>GCC's Tools</h1>
-</div>
- 
-<div id="HeadPhoto">
-<img src="./img/headphoto.jpg" style="width:100px; height:100px;" />
-</div>
-
-<div class="MenuList">
-	<ul id="menu_list" >
-		<li><a href="https://guochaocheng.github.io" target="_self">首页</a></li>
-		<li><a href="https://blog.csdn.net/weixin_43840576" target="_blank">CSDN</a></li>
-		<li><a href="https://www.cnblogs.com/" target="_blanK">博客园</a></li>
-		<li><a href="http://www.baidu.com" target="_blank">百度一下</a></li>
-		<li><a href="http://dailynews.sina.com/gb/" target="_blank">新浪新闻</a></li>
-		<li><a href="https://weibo.com/u/3579792124/" target="_blank">新浪微博</a></li>
-		<li><a href="https://www.ncbi.nlm.nih.gov/pubmed/" target="_blank">NCBI</a></li>
-		<li><a href="https://github.com/Guochaocheng/" target="_blank">Github</a></li>
-	</ul>
-</div>
-
-<div id="search_box">
-<form action="https://www.baidu.com/s" method="get" target="_blank">
-		<!--<input name="wd" id="search" placeholder="hua" />-->
-		<!--<button>搜索</button>-->
-		<input type="text" placeholder="天猫" style="width:150px; height:20px"/>
-		<input type="button" value="搜索"/>
-</form>
-</div>
-	
-<div class="reverse-box">
-<!--form之间的表单元素,是和服务器交互的数据内容-->
-<h3 id="reverse_title">01.序列反向互补工具</h3>
-	<form name="searchForm" action="url" method="post|get" enctype="multipart/form-data">
-	输入序列:<textarea id="Reverse_input" placeholder="请在此输入序列" style="width: 400px; height: 100px;" ></textarea>
-	输出序列:<textarea id="Reverse_output" style="width: 400px; height: 100px;" ></textarea>
-		<input type="button" onclick="show_info()" value="反向互补"/>
-	</form>
-</div>
-
-<script type="text/javascript">
+/* 02. PCR TM calculate tools. */
 function PCR_calculate(){
 	var PCR_sequence = document.getElementById("PCR_input").value.toUpperCase();
 	var G_num=0; var C_num=0; var A_num=0; var T_num=0;
 	/* if the sequence is empty, sed error. */
-	/*console.log(PCR_sequence);*/
+	console.log(PCR_sequence);
 	if( PCR_sequence.length <1 ){	
 		window.alert("The sequence can't be empty");
 	}else{
@@ -112,115 +73,145 @@ function PCR_calculate(){
 		}
 	}
 }
+
 /* 03.Uniq list script */
-function Directory(){
-	this.datastore = new Object();
-	this.add = add;
-	this.find = find;
-	this.remove = remove;
-	this.count = count;
-}
-function add(key, value){
-	this.datastore[key] = value;
-}
-function find(key){
-	return this.datastore[key];
-}
-function remove(key){
-	delete this.datastore[key];
-}
-function count(){
-	var n=0;
-	for( var key in this.datastore){
-		++n;
+function Directory(StringValue,ncol){
+	var dict={};
+	var StringValue, ncol;
+	var StringList = StringValue.split("\n");
+	for( var Row in StringList ){
+		var StringContent = StringList[Row].split("\t");
+		if( StringContent.length < 1){	continue;	}
+		var key = StringContent[ncol-1];
+		var tmp =[];
+		for(var i=0;i<=StringContent.length;i++){
+			if( i == ncol-1){	continue;	}
+			tmp.push(StringContent[i]);
+		}
+		var value = tmp.join("\t");
+		dict[key] = value;
 	}
-	return n;
+	return dict;
 }
+
 function Uniq_list(){
-	var idbox1 = document.getElementById("list_box1").value;
-	var idbox1_row = idbox1.split("\n");
-	var idbox2 = document.getElementById("list_box2").value;
-	var idbox2_row = idbox2.split("\n");
-	/* document.getElementById("list_box_same").value = idbox1_row.length;*/
-	var list1 = Directory();
-	var list2 = Directory();
-	var common = Directory();
-	var uniq1 = Directory();
-	var uniq2 = Directory();
-	for( var i=0;i<=idbox1_row.length;i++){
-		line = idbox1[i].split("\t");
-		if( line.length < 1){	continue;	}
-		list1.add(line[0], line[1]);
+	var BoxContent1 = document.getElementById("list_box1").value;
+	var BoxContent2 = document.getElementById("list_box2").value;
+	var idbox_col1 = document.getElementById("list_box1_col").value;
+	var idbox_col2 = document.getElementById("list_box2_col").value;
+	if( BoxContent1.length <1 || BoxContent2.length < 1 || idbox_col1.length < 1 || idbox_col2.length<1 ){
+		window.alert("It can't be empty!");
 	}
-	for( var i=0;i<=idbox2_row.length;i++){
-		line = idbox2[i].split("\t");
-		if( line.length < 1){	continue;	}
-		list2.add(line[0], line[1]);
-		if( list1.find(line[0])){
-			common.add(line[0], line[1]);
+	var IDdict1 = Directory(BoxContent1, idbox_col1);
+	var IDdict2 = Directory(BoxContent2, idbox_col2);
+	
+	var CommonBox=[]; var Uniq1Box=[]; var Uniq2Box=[];
+	for(var key in IDdict1){
+		if( IDdict2[key] ){
+			CommonBox.push(key+"\t"+IDdict1[key]+"\t"+IDdict2[key]);
 		}
 		else{
-			uniq2.add(line[0], line[1]);
+			Uniq1Box.push(key+"\t"+IDdict1[key]);
 		}
 	}
-	for( var key in list1){
-		if( common.find(key) ){
+	for(var key in IDdict2){
+		if( IDdict1[key] ){
 			continue;
 		}
 		else{
-			uniq1.add(line[0], line[1]);
+			Uniq2Box.push(key+"\t"+IDdict2[key]);
 		}
 	}
-	
-
+	document.getElementById("list_box_same").value = CommonBox.join("\n");
+	document.getElementById("list_box_diff1").value = Uniq1Box.join("\n");
+	document.getElementById("list_box_diff2").value = Uniq2Box.join("\n");
 }
 </script>
 
-  <h3 id="PCR_title">02.PCR引物(核苷酸)计算器</h3>
-  <table border="3" cellspacing="0" style="position:absolute; width:400px; height:300px; top:280px; left:600px;" >
-	<tr>
-		<th colspan="2" align="middle">请在栏内输入核苷酸序列</th>
-	</tr>
-	<tr>
-		<td colspan="2" algin="middle"><textarea id="PCR_input" style="width:400px; height:100px;"></textarea></td>
-	</tr>
-	<tr>	
-		<td>序列长度:<input type="text" id="PCR_length" style="width:60px; height:20px"/>nt</td>
-		<td>退火温度(Tm):<input type="text" id="PCR_TM" style="width:60px; height:20px"/>℃</td>
-	</tr>
-	<tr>
-		<td>GC含量%:<input type="text" id="PCR_GC" style="width:60px; height:20px"/></td>
-		<td>分子量:<input type="text" id="PCR_MW" style="width:60px; height:20px"/>道尔顿(g/M)</td>
-	</tr>
-	<tr>
-		<td align="middle"><input type="button" onclick="PCR_calculate()" value="计算" style="FONT-SIZE:18pt; FONT-FAMILY:幼圆"/></td>
-		<td>1个OD260等于<input type="text" id="PCR_OD" style="width:60px; height:20px"/>P摩尔数</td>
-	</tr>
-  </table>
-	
-<h3 id="id_compine_title">03.ID同名捕获</h3>
-<table border="3" cellspacing="0" style="position:absolute; width:400px; height:300px; top:280px; left:1200px; font-size:12pt; font-family:宋体" >
-<tr>
-	<td colspan="3" align="middle">列表1</td>
-	<td colspan="3" align="middle">列表2</td>
-</tr>
-<tr>
-	<td colspan="3" align="middle"><textarea id="list_box1" style="width:250px; height:100px;"></textarea></td>
-	<td colspan="3" align="middle"><textarea id="list_box1" style="width:250px; height:100px;"></textarea></td>
-</tr>
-<tr>
-	<td >相同ID</td>
-	<td><textarea id="list_box_same" style="width:150px; height:100px;"></textarea></td>
-	<td>列表1 Uniq</td>
-	<td><textarea id="list_box_diff1" style="width:150px; height:100px;"></textarea></td>
-	<td>列表2 Uniq</td>
-	<td><textarea id="list_box_diff2" style="width:150px; height:100px;"></textarea></td>
-</tr>
-<tr>
-	<td colspan="6" align="middle"><input type="button" onclick="Uniq_list()" value="计算"/></td>
-</tr>
-</table>
-  
-</body>
+</head>
 
-</html>
+<div id="#wapper">
+<div id="main_content">
+<body background="./green.jpg"; style="background-repeat:no-repeat; background-attachment:fixed; background-size: 100% 100%">
+<div id="header">
+  <h1>GCC's Tools</h1>
+</div>
+ 
+<div id="HeadPhoto">
+<img src="./headphoto.jpg" style="width:100px; height:100px;" />
+</div>
+
+<div class="MenuList">
+<!--<p>Never give up until the end!</p>*/-->
+<ul id="menu_list" >
+<li><a href="https://guochaocheng.github.io" target="_self">首页</a></li>
+<li><a href="https://blog.csdn.net/weixin_43840576" target="_blank">CSDN</a></li>
+<li><a href="https://www.cnblogs.com/" target="_blanK">博客园</a></li>
+<li><a href="http://www.baidu.com" target="_blank">百度一下</a></li>
+<li><a href="http://dailynews.sina.com/gb/" target="_blank">新浪新闻</a></li>
+<li><a href="https://weibo.com/u/3579792124/" target="_blank">新浪微博</a></li>
+<li><a href="https://www.baidu.com/s?wd=天猫">天猫</a></li>
+</ul>
+</div>
+
+<div class="reverse-box">
+<!--form之间的表单元素,是和服务器交互的数据内容-->
+<h3 id="reverse_title">01.序列反向互补工具</h3>
+	<form name="searchForm" action="url" method="post|get" enctype="multipart/form-data">
+	输入序列:<textarea id="Reverse_input" placeholder="请在此输入序列" style="width: 400px; height: 100px;" ></textarea>
+	输出序列:<textarea id="Reverse_output" style="width: 400px; height: 100px;" ></textarea>
+		<input type="button" onclick="show_info()" value="反向互补"/>
+	</form>
+</div>
+
+<div id="search_box">
+	<form action="https://www.baidu.com/s?" method="get" target="_blank">
+		<input name="wd" id="search" placeholder="天猫" />
+		<button>搜索</button>
+		<!--<input type="text" placeholder="天猫" style="width:150px; height:20px">-->
+		<!--<input type="button" type="submit" value="搜索">-->
+	</form>
+</div>
+
+<div id="#wapper">
+<div id="main_content">
+<body background="./green.jpg"; style="background-repeat:no-repeat; background-attachment:fixed; background-size: 100% 100%">
+<div id="header">
+  <h1>GCC's Tools</h1>
+</div>
+ 
+<div id="HeadPhoto">
+<img src="./headphoto.jpg" style="width:100px; height:100px;" />
+</div>
+
+<div class="MenuList">
+<!--<p>Never give up until the end!</p>*/-->
+<ul id="menu_list" >
+<li><a href="https://guochaocheng.github.io" target="_self">首页</a></li>
+<li><a href="https://blog.csdn.net/weixin_43840576" target="_blank">CSDN</a></li>
+<li><a href="https://www.cnblogs.com/" target="_blanK">博客园</a></li>
+<li><a href="http://www.baidu.com" target="_blank">百度一下</a></li>
+<li><a href="http://dailynews.sina.com/gb/" target="_blank">新浪新闻</a></li>
+<li><a href="https://weibo.com/u/3579792124/" target="_blank">新浪微博</a></li>
+<li><a href="https://www.baidu.com/s?wd=天猫">天猫</a></li>
+</ul>
+</div>
+
+<div class="reverse-box">
+<!--form之间的表单元素,是和服务器交互的数据内容-->
+<h3 id="reverse_title">01.序列反向互补工具</h3>
+	<form name="searchForm" action="url" method="post|get" enctype="multipart/form-data">
+	输入序列:<textarea id="Reverse_input" placeholder="请在此输入序列" style="width: 400px; height: 100px;" ></textarea>
+	输出序列:<textarea id="Reverse_output" style="width: 400px; height: 100px;" ></textarea>
+		<input type="button" onclick="show_info()" value="反向互补"/>
+	</form>
+</div>
+
+<div id="search_box">
+	<form action="https://www.baidu.com/s?" method="get" target="_blank">
+		<input name="wd" id="search" placeholder="天猫" />
+		<button>搜索</button>
+		<!--<input type="text" placeholder="天猫" style="width:150px; height:20px">-->
+		<!--<input type="button" type="submit" value="搜索">-->
+	</form>
+</div>
