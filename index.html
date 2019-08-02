@@ -101,30 +101,27 @@ function Uniq_list(){
 	var idbox_col2 = document.getElementById("list_box2_col").value;
 	if( BoxContent1.length <1 || BoxContent2.length < 1 || idbox_col1.length < 1 || idbox_col2.length<1 ){
 		window.alert("It can't be empty!");
+	}else{
+		var IDdict1 = Directory(BoxContent1, idbox_col1);
+		var IDdict2 = Directory(BoxContent2, idbox_col2);
+		var CommonBox=[]; var Uniq1Box=[]; var Uniq2Box=[];
+		for(var key in IDdict1){
+			if( IDdict2[key] ){
+				CommonBox.push(key+"\t"+IDdict1[key]+"\t"+IDdict2[key]);
+			}else{
+				Uniq1Box.push(key+"\t"+IDdict1[key]);
+			}
+		}
+		for(var key in IDdict2){
+			if( IDdict1[key] ){	continue;
+			}else{
+				Uniq2Box.push(key+"\t"+IDdict2[key]);
+			}
+		}
+		document.getElementById("list_box_same").value = CommonBox.join("\n");
+		document.getElementById("list_box_diff1").value = Uniq1Box.join("\n");
+		document.getElementById("list_box_diff2").value = Uniq2Box.join("\n");
 	}
-	var IDdict1 = Directory(BoxContent1, idbox_col1);
-	var IDdict2 = Directory(BoxContent2, idbox_col2);
-	
-	var CommonBox=[]; var Uniq1Box=[]; var Uniq2Box=[];
-	for(var key in IDdict1){
-		if( IDdict2[key] ){
-			CommonBox.push(key+"\t"+IDdict1[key]+"\t"+IDdict2[key]);
-		}
-		else{
-			Uniq1Box.push(key+"\t"+IDdict1[key]);
-		}
-	}
-	for(var key in IDdict2){
-		if( IDdict1[key] ){
-			continue;
-		}
-		else{
-			Uniq2Box.push(key+"\t"+IDdict2[key]);
-		}
-	}
-	document.getElementById("list_box_same").value = CommonBox.join("\n");
-	document.getElementById("list_box_diff1").value = Uniq1Box.join("\n");
-	document.getElementById("list_box_diff2").value = Uniq2Box.join("\n");
 }
 </script>
 
