@@ -18,6 +18,7 @@
     .bottom{position:absolute;left:0;right:0;bottom:0;height:80px;}
     #main_content{padding-bottom: 60px;}
     #wapper{position:relative; height:auto; min-height:100%; }
+		#idbox{ margin-bottom: 1500px;}
   </style>
 
 <script type="text/javascript">
@@ -170,6 +171,7 @@ function Uniq_list(){
 	</form>
 </div>
 	
+<div id="idbox">
 <h3 id="PCR_title">02.PCR引物(核苷酸)计算器</h3>
   <table border="3" cellspacing="0" style="position:absolute; width:400px; height:300px; top:280px; left:600px; font-family:宋体" >
 	<tr>
@@ -193,22 +195,22 @@ function Uniq_list(){
   </table>
 
 <h3 id="id_compine_title">03.ID同名捕获</h3>
-	<table border="3" cellspacing="0" style="position:absolute; width:400px; height:300px; top:650px; left:20px; font-size:12pt; margin-bottom:70px; font-family:宋体" >
+	<table border="3" cellspacing="0" style="position:absolute; width:800px; height:600px; top:650px; left:20px; font-size:12pt; margin-bottom:70px; font-family:宋体" >
 	<tr>
 		<td colspan="3" align="middle">列表1</td>
 		<td colspan="3" align="middle">列表2</td>
 	</tr>
 	<tr>
-		<td colspan="3" align="middle"><textarea id="list_box1" style="width:250px; height:100px;"></textarea></td>
-		<td colspan="3" align="middle"><textarea id="list_box2" style="width:250px; height:100px;"></textarea></td>
+		<td colspan="3" align="middle"><textarea id="list_box1" style="width:400px; height:350px;"></textarea></td>
+		<td colspan="3" align="middle"><textarea id="list_box2" style="width:400px; height:350px;"></textarea></td>
 	</tr>
 	<tr>
 		<td >相同ID</td>
-		<td><textarea id="list_box_same" style="width:150px; height:100px;"></textarea></td>
+		<td><textarea id="list_box_same" style="width:250px; height:200px;"></textarea></td>
 		<td>列表1 Uniq</td>
-		<td><textarea id="list_box_diff1" style="width:150px; height:100px;"></textarea></td>
+		<td><textarea id="list_box_diff1" style="width:250px; height:100px;"></textarea></td>
 		<td>列表2 Uniq</td>
-		<td><textarea id="list_box_diff2" style="width:150px; height:100px;"></textarea></td>
+		<td><textarea id="list_box_diff2" style="width:250px; height:200px;"></textarea></td>
 	</tr>
 	<tr>
 		<td>列1</td><td align="left"><input type="text" id="list_box1_col" style="width:150px; height:20px" placeholder="列表1比较的列编号"/></td>
@@ -216,6 +218,7 @@ function Uniq_list(){
 		<td colspan="2" align="middle"><input type="button" onclick="Uniq_list()" value="计算"/></td>
 	</tr>
 	</table>
+	</div>
 </div>
 
 <div id="footer">CopyRight@GCC2019</div>
