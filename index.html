@@ -15,9 +15,9 @@
     #search_box{ position: fixed; top: 128px; right:200px; }
     #id_compine_title{ width:300px; height: 100px; position: absolute; top: 200px; left:1200px; } 
     #footer {	height: 30px; line-height: 40px; left: 0; position: fixed; bottom: 0; width: 100%; text-align: center; background: #333; color: #fff; font-family: Arial; font-size: 12px; letter-spacing: 1px; margin:0 auto;}
-		.bottom{position:absolute;left:0;right:0;bottom:0;height:80px;}
-		#main_content{padding-bottom: 60px;}
-		#wapper{position:relative; height:auto; min-height:100%; }
+    .bottom{position:absolute;left:0;right:0;bottom:0;height:80px;}
+    #main_content{padding-bottom: 60px;}
+    #wapper{position:relative; height:auto; min-height:100%; }
   </style>
 
 <script type="text/javascript">
@@ -172,46 +172,58 @@ function Uniq_list(){
 		<!--<input type="button" type="submit" value="搜索">-->
 	</form>
 </div>
+	
+<h3 id="PCR_title">02.PCR引物(核苷酸)计算器</h3>
+  <table border="3" cellspacing="0" style="position:absolute; width:400px; height:300px; top:280px; left:600px; font-family:宋体" >
+	<tr>
+		<th colspan="2" align="middle">请在栏内输入核苷酸序列</th>
+	</tr>
+	<tr>
+		<td colspan="2" algin="middle"><textarea id="PCR_input" style="width:400px; height:100px;" placeholder="请在此输入序列"></textarea></td>
+	</tr>
+	<tr>	
+		<td>序列长度:<input type="text" id="PCR_length" style="width:60px; height:20px"/>nt</td>
+		<td>退火温度(Tm):<input type="text" id="PCR_TM" style="width:60px; height:20px"/>℃</td>
+	</tr>
+	<tr>
+		<td>GC含量%:<input type="text" id="PCR_GC" style="width:60px; height:20px"/></td>
+		<td>分子量:<input type="text" id="PCR_MW" style="width:60px; height:20px"/>道尔顿(g/M)</td>
+	</tr>
+	<tr>
+		<td align="middle"><input type="button" onclick="PCR_calculate()" value="计算" /></td>
+		<td>1个OD260等于<input type="text" id="PCR_OD" style="width:60px; height:20px"/>P摩尔数</td>
+	</tr>
+  </table>
 
-<div id="#wapper">
-<div id="main_content">
-<body background="./green.jpg"; style="background-repeat:no-repeat; background-attachment:fixed; background-size: 100% 100%">
-<div id="header">
-  <h1>GCC's Tools</h1>
-</div>
- 
-<div id="HeadPhoto">
-<img src="./headphoto.jpg" style="width:100px; height:100px;" />
-</div>
-
-<div class="MenuList">
-<!--<p>Never give up until the end!</p>*/-->
-<ul id="menu_list" >
-<li><a href="https://guochaocheng.github.io" target="_self">首页</a></li>
-<li><a href="https://blog.csdn.net/weixin_43840576" target="_blank">CSDN</a></li>
-<li><a href="https://www.cnblogs.com/" target="_blanK">博客园</a></li>
-<li><a href="http://www.baidu.com" target="_blank">百度一下</a></li>
-<li><a href="http://dailynews.sina.com/gb/" target="_blank">新浪新闻</a></li>
-<li><a href="https://weibo.com/u/3579792124/" target="_blank">新浪微博</a></li>
-<li><a href="https://www.baidu.com/s?wd=天猫">天猫</a></li>
-</ul>
-</div>
-
-<div class="reverse-box">
-<!--form之间的表单元素,是和服务器交互的数据内容-->
-<h3 id="reverse_title">01.序列反向互补工具</h3>
-	<form name="searchForm" action="url" method="post|get" enctype="multipart/form-data">
-	输入序列:<textarea id="Reverse_input" placeholder="请在此输入序列" style="width: 400px; height: 100px;" ></textarea>
-	输出序列:<textarea id="Reverse_output" style="width: 400px; height: 100px;" ></textarea>
-		<input type="button" onclick="show_info()" value="反向互补"/>
-	</form>
+<h3 id="id_compine_title">03.ID同名捕获</h3>
+	<table border="3" cellspacing="0" style="position:absolute; width:400px; height:300px; top:650px; left:20px; font-size:12pt; margin-bottom:50px; font-family:宋体" >
+	<tr>
+		<td colspan="3" align="middle">列表1</td>
+		<td colspan="3" align="middle">列表2</td>
+	</tr>
+	<tr>
+		<td colspan="3" align="middle"><textarea id="list_box1" style="width:250px; height:100px;"></textarea></td>
+		<td colspan="3" align="middle"><textarea id="list_box2" style="width:250px; height:100px;"></textarea></td>
+	</tr>
+	<tr>
+		<td >相同ID</td>
+		<td><textarea id="list_box_same" style="width:150px; height:100px;"></textarea></td>
+		<td>列表1 Uniq</td>
+		<td><textarea id="list_box_diff1" style="width:150px; height:100px;"></textarea></td>
+		<td>列表2 Uniq</td>
+		<td><textarea id="list_box_diff2" style="width:150px; height:100px;"></textarea></td>
+	</tr>
+	<tr>
+		<td>列1</td><td align="left"><input type="text" id="list_box1_col" style="width:150px; height:20px" placeholder="列表1比较的列编号"/></td>
+		<td>列2</td><td align="left"><input type="text" id="list_box2_col" style="width:150px; height:20px" placeholder="列表2比较的列编号"/></td>
+		<td colspan="2" align="middle"><input type="button" onclick="Uniq_list()" value="计算"/></td>
+	</tr>
+	</table>
 </div>
 
-<div id="search_box">
-	<form action="https://www.baidu.com/s?" method="get" target="_blank">
-		<input name="wd" id="search" placeholder="天猫" />
-		<button>搜索</button>
-		<!--<input type="text" placeholder="天猫" style="width:150px; height:20px">-->
-		<!--<input type="button" type="submit" value="搜索">-->
-	</form>
+<div class="bottom"></div>
+<div id="footer">CopyRight@GCC2019</div>
 </div>
+</body>
+
+</html>
