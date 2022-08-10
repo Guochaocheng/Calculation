@@ -5,11 +5,11 @@
   <title> GuoChaocheng's Blog </title><META Name="keywords" Content="GCC"/>
   <link href="src/css/bootstrap.min.css" rel="stylesheet">
   <link href="src/css/bootstrap-theme.min.css" rel="stylesheet">
+  <script src="src/js/echarts.min.js"></script>
   <script src="src/js/jquery-1.11.0.min.js"></script>
   <script src="src/js/vue.js"></script>
   <script src="src/js/bootstrap.min.js"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="src/js/clipboard.min.js"></script>
 </head>
 
 <body>
@@ -24,7 +24,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">Bootstrap theme</a>
+					<a class="navbar-brand" href="#">Small biothenology Tools</a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
@@ -56,20 +56,20 @@
 						<!-- Main jumbotron for a primary marketing message or call to action -->
 						<div class="col-md-12">
 							<div class="jumbotron" style="margin-top: 80px;">
-								<h1>Theme example</h1>
+								<h1>Welcome! </h1>
 								<p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
 							</div>
 						</div>
 
 						<div class="col-md-10 box-left">
-							<div id="tools1" class="col-md-12">
+							<div id="tools1" class="col-md-12" name="tools3">
 								<div id="reverse-box" class="panel panel-primary">
 									<div class="panel-heading">01. 序列反向互补工具</div>
 									<div class="panel-body">
-										<div class="col-md-3">
+										<div class="col-md-2">
 											<div class="grid-content"></div>
 										</div>
-										<form class="col-md-6">
+										<form class="col-md-8">
 											<label for="name">Input sequence</label>
 											<textarea v-model="input_reverse_1" type="text" class="form-control input-box" placeholder="请输入需要转化的序列" ></textarea>
 											<label for="name">Results</label>
@@ -77,19 +77,19 @@
 											<button type="button" class="btn btn-success btn-box" @click="reverse_sequence">Reverse Sequences</button>
 											<button type="button" class="btn btn-success btn-box" @click="clear_text1">Clear</button>
 										</form>
-										<div class="col-md-3"></div>
+										<div class="col-md-2"></div>
 									</div>
 								</div>
 							</div>
 
-							<div id="tools2" class="col-md-12">
+							<div id="tools2" class="col-md-12" name="tools2">
 								<div id="idbox" class="panel panel-primary">
 									<div class="panel-heading">02. PCR引物(核苷酸)计算器</div>
 									<div class="panel-body">
-										<div class="col-md-3">
+										<div class="col-md-2">
 											<div class="grid-content"></div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-8">
 											<label for="name">请在输入框内输入核苷酸序列</label>
 											<textarea id="id_input" v-model="input_sequence_2" type="text" class="form-control input-box" placeholder="请输入需要转化的序列" ></textarea>
 											<button type="button" class="btn btn-success btn-box" @click="calculate_tm">Calculate !</button>
@@ -120,19 +120,19 @@
 												</div>
 											</div>									
 										</div>
-										<div class="col-md-3"></div>
+										<div class="col-md-2"></div>
 									</div>
 								</div>
 							</div>
 
-							<div id="tools3" class="col-md-12">
+							<div id="tools3" class="col-md-12" name="tools3">
 								<div id="idbox" class="panel panel-primary">
 									<div class="panel-heading">03. ID同名捕获</div>
 									<div class="panel-body">
-										<div class="col-md-3">
+										<div class="col-md-2">
 											<div class="grid-content"></div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-8">
 											<div class="col-md-6 box-left">
 												<label for="name">列表1</label>
 												<textarea  v-model="tool3_input_table1" type="text" class="form-control input-box" placeholder="请输入列表1" rows="8"></textarea>
@@ -163,26 +163,26 @@
 												</div>
 											</div>									
 										</div>
-										<div class="col-md-3"></div>
+										<div class="col-md-2"></div>
 									</div>
 								</div>
 							</div>
 
-							<div id="tools4" class="col-md-12">
+							<div id="tools4" class="col-md-12" name="tools4">
 								<div id="idbox" class="panel panel-primary">
 									<div class="panel-heading">04. 两列表求均值、方差、标准差</div>
 									<div class="panel-body">
-										<div class="col-md-3">
+										<div class="col-md-2">
 											<div class="grid-content"></div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-8">
 											<div class="col-md-6 box-left">
 												<label for="name">列表1</label>
-												<textarea v-model="tool4_input_table1" type="text" class="form-control input-box" placeholder="请输入列表1" rows="6"></textarea>
+												<textarea v-model="tool4_input_table1" type="text" class="form-control input-box" placeholder="请输入列表1" rows="4"></textarea>
 											</div>
 											<div class="col-md-6 box-left">
 												<label for="name">列表2</label>
-												<textarea v-model="tool4_input_table2" type="text" class="form-control input-box" placeholder="请输入列表2" rows="6"></textarea>
+												<textarea v-model="tool4_input_table2" type="text" class="form-control input-box" placeholder="请输入列表2" rows="4"></textarea>
 											</div>
 											<button type="button" class="btn btn-success btn-box" @click="calculate_ave_value">Calculate !</button>
 											<button type="button" class="btn btn-success btn-box" @click="clear_text4">Clear</button>
@@ -190,23 +190,29 @@
 												<div class="panel-heading">输出结果</div>
 												<div class="panel-body">
 													<label for="name">列表2-列表1差值 </label>
-													<textarea v-model="tool4_out1" :disabled="tool4_dis1" type="text" class="form-control input-box" rows="6"></textarea>
+													<textarea v-model="tool4_out1" :disabled="tool4_dis1" type="text" class="form-control input-box" rows="4"></textarea>
 													<div class="col-md-6 box-left">
 														<label for="name" class="item-text">列表1的均值， 标准差</label>
-														<textarea v-model="tool4_table1_ave" :disabled="tool4_dis2" type="text" class="form-control input-box" rows="6"></textarea>
+														<textarea v-model="tool4_table1_ave" :disabled="tool4_dis2" type="text" class="form-control input-box" rows="3"></textarea>
 													</div>
 													<div class="col-md-6 box-right">
 														<label for="name" class="item-text">列表2的均值, 标准差</label>
-														<textarea v-model="tool4_table2_ave" :disabled="tool4_dis3" type="text" class="form-control input-box" rows="6"></textarea>
+														<textarea v-model="tool4_table2_ave" :disabled="tool4_dis3" type="text" class="form-control input-box" rows="3"></textarea>
 													</div>
-													<button type="button" class="btn btn-success" v-clipboard:copy="tool4_out1" v-clipboard:success="onCopy" v-clipboard:error="onError" style="margin-top:10px;margin-right:10px;" >Copy1</button>
-													<button type="button" class="btn btn-success" v-clipboard:copy="tool4_table1_ave" v-clipboard:success="onCopy" v-clipboard:error="onError" style="margin-top:10px;margin-right:10px;" >Copy2</button>
-													<button type="button" class="btn btn-success" v-clipboard:copy="tool4_table2_ave" v-clipboard:success="onCopy" v-clipboard:error="onError" style="margin-top:10px;margin-right:10px;" >Copy3</button>
+													<label for="name">列表2-列表1差值的均值 </label>
+													<textarea v-model="tool4_out1_ave" :disabled="tool4_dis4" type="text" class="form-control input-box" rows="4"></textarea>
+													<button type="button" class="btn btn-success" @click="copy_text(tool4_out1, copy1)" style="margin-top:10px;margin-right:5px;" >{{copy1}}</button>
+													<button type="button" class="btn btn-success" @click="copy_text(tool4_table1_ave, copy2)" style="margin-top:10px;margin-right:5px;" >{{copy2}}</button>
+													<button type="button" class="btn btn-success" @click="copy_text(tool4_table2_ave, copy3)" style="margin-top:10px;margin-right:5px;" >{{copy3}}</button>
+													<button type="button" class="btn btn-success" @click="copy_text(tool4_out1_ave, copy4)" style="margin-top:10px;margin-right:5px;" >{{copy4}}</button>
 													<button type="button" class="btn btn-success" style="margin-top:10px;margin-right:10px;" >Clear</button>
+													<label for="name item-text" style="margin-top:10px; margin-bottom:20px;">列表2-列表1差值的均值-图形 </label>
+													<div id="plot-box" :style="{display: display}"></div>
+													
 												</div>
 											</div>									
 										</div>
-										<div class="col-md-3"></div>
+										<div class="col-md-2"></div>
 									</div>
 								</div>
 							</div>
@@ -221,6 +227,11 @@
 										<li  v-for="item in linkData" ><a :href="item.url" >{{item.name}}</a></li>
 									</ul>
 								</div>
+							</div>
+							<div class="back-top" @mouseover="enterBackTop" @mouseout="outBackTop" :style="{opacity: opacity}">
+								<button type="button" class="btn-xs back_top" @click="handleScrollTop">
+									<span class="glyphicon glyphicon-eject" aria-hidden="true" ></span>
+								</button>
 							</div>
 						</div>
 					</div>
@@ -271,59 +282,26 @@
 .link-box {
 	background-color: #fff7f7;
 }
+.van-icon {
+	position: fixed;
+	bottom: 80px;
+	right:30px;
+}
+.van-icon:hover{
+	opacity: 1;
+}
+.back_top {
+	position: fixed;
+	bottom: 80px;
+	right: 240px;
+}
+#plot-box {
+	width: 400px;
+	height: 300px;
+}
 </style>
 
 <script type="text/javascript">
-	/* 03.Uniq list script */
-	function Directory(StringValue,ncol){
-		var dict={};
-		var StringValue, ncol;
-		var StringList = StringValue.split("\n");
-		for( var Row in StringList ){
-			var StringContent = StringList[Row].split("\t");
-			if( StringContent.length < 1){	continue;	}
-			var key = StringContent[ncol-1];
-			var tmp =[];
-			for(var i=0;i<=StringContent.length;i++){
-				if( i == ncol-1){	continue;	}
-				tmp.push(StringContent[i]);
-			}
-			var value = tmp.join("\t");
-			dict[key] = value;
-		}
-		return dict;
-	}
-	
-	function Uniq_list(){
-		var BoxContent1 = document.getElementById("list_box1").value;
-		var BoxContent2 = document.getElementById("list_box2").value;
-		var idbox_col1 = document.getElementById("list_box1_col").value;
-		var idbox_col2 = document.getElementById("list_box2_col").value;
-		if( BoxContent1.length <1 || BoxContent2.length < 1 || idbox_col1.length < 1 || idbox_col2.length<1 ){
-			window.alert("It can't be empty!");
-		}else{
-			var IDdict1 = Directory(BoxContent1, idbox_col1);
-			var IDdict2 = Directory(BoxContent2, idbox_col2);
-			var CommonBox=[]; var Uniq1Box=[]; var Uniq2Box=[];
-			for(var key in IDdict1){
-				if( IDdict2[key] ){
-					CommonBox.push(key+"\t"+IDdict1[key]+"\t"+IDdict2[key]);
-				}else{
-					Uniq1Box.push(key+"\t"+IDdict1[key]);
-				}
-			}
-			for(var key in IDdict2){
-				if( IDdict1[key] ){	continue;
-				}else{
-					Uniq2Box.push(key+"\t"+IDdict2[key]);
-				}
-			}
-			document.getElementById("list_box_same").value = CommonBox.join("\n");
-			document.getElementById("list_box_diff1").value = Uniq1Box.join("\n");
-			document.getElementById("list_box_diff2").value = Uniq2Box.join("\n");
-		}
-	}
-
 	/* 04. DNA reverse complement tools. */
 	new Vue ({
 		el: '#pageContent',
@@ -349,6 +327,22 @@
 					{
 						url: 'https://www.baidu.com/s?wd=天猫',
 						name: '天猫'
+					},
+					{
+						url: 'index.html#tools1',
+						name: '序列反向互补工具'
+					},
+					{
+						url: 'index.html#tools2',
+						name: 'PCR引物(核苷酸)计算器'
+					},
+					{
+						url: 'index.html#tools3',
+						name: 'ID同名捕获'
+					},
+					{
+						url: 'index.html#tools4',
+						name: '两列表求均值、方差、标准差'
 					}
 				],
 				/* tools 1 */
@@ -378,11 +372,40 @@
 				tool4_input_table1: '',
 				tool4_input_table2: '',
 				tool4_out1: '',
+				tool4_out1_ave: '',
 				tool4_table1_ave: '',
 				tool4_table2_ave: '',
 				tool4_dis1: true,
 				tool4_dis2: true,
-				tool4_dis3: true
+				tool4_dis3: true,
+				tool4_dis4: true,
+				/* back-top */
+				opacity: '.3',
+				gotop: false,
+				scrollHeight: 300,
+				scrollTop: 0,
+				/* copy */
+				copy1: 'Copy1',
+				copy2: 'Copy2',
+				copy3: 'Copy3',
+				copy4: 'Copy4',
+				/* plot */
+				option: {
+					title: {
+						text: '差值柱状图',
+						left: 'center'
+					},
+					legend: {},
+					xAxis: {
+							data: []
+					},
+					yAxis: {},
+					series: {
+						type: 'bar',
+						data: []
+					}
+				},
+				display: 'none',
 			}
 		},
 		methods: {
@@ -597,6 +620,7 @@
 					alert("The two list are not the same!");
 				}else{
 					var diff_data = [];
+					var diff_ave_data = [];
 					for(var i=0; i<row1; i++){
 						var tmp_data = [];
 						for(var j=0; j<col1; j++){
@@ -612,13 +636,18 @@
 							}
 						}
 						diff_data.push(tmp_data.join("\t"));
+						diff_ave_data.push( d3.mean(tmp_data).toFixed(1));
 					}
 					this.tool4_out1 = diff_data.join("\n");
+					this.tool4_out1_ave = diff_ave_data.join("\n");
 					this.tool4_table1_ave = this.$options.methods.desc_data_matrix(list_data1);
 					this.tool4_table2_ave = this.$options.methods.desc_data_matrix(list_data2);
 					this.tool4_dis1 = false;
 					this.tool4_dis2 = false;
 					this.tool4_dis3 = false;
+					this.tool4_dis4 = false;
+					console.log(diff_ave_data);
+					this.plotBar();
 				}
 			},
 			clear_text4 () {
@@ -630,15 +659,75 @@
 				this.tool4_dis1 = true;
 				this.tool4_dis2 = true;
 				this.tool4_dis3 = true;
+				this.tool4_dis4 = true;
 			},
 			/* copy button */
-			onCopy: function (e) {
+			copy_text: function(val, txt) {
+				navigator.clipboard.writeText(val).then(function() {
+					alert('Copy successful!');
+				}).catch(function(err) {
+					console.log('Async: Could not copy text: ', err);
+				});
+			},
+	 		onCopy: function (e) {
 				alert('You just copied: ' + e.text);
 			},
 			onError: function (e) {
 				console.log(e);
 				alert('Failed to copy texts!')
+			},
+			enterBackTop () {
+				this.opacity = '0.9';
+			},
+			outBackTop () {
+				this.opacity = '0.3';
+			},
+			handleScroll (e) {
+				const that = this;
+				const scrollTop = 
+					window.pageYOffset || 
+					document.documentElement.scrollTop ||
+					document.body.scrollTop;
+				that.scrollTop = scrollTop;
+				that.scrollTop > this.scrollHeight
+					? (this.gotop = true)
+					: (this.gotop = false);
+			},
+			handleScrollTop () {
+				const that = this;
+				const timer = setInterval(() => {
+					const ispeed = Math.floor(that.scrollTop / 5);
+					document.documentElement.scrollTop = document.body.scrollTop = that.scrollTop + ispeed;
+					if(that.scrollTop == 0) {
+						clearInterval(timer);
+					}
+				}, 16 );
+			},
+			plotBar () {
+				var myBar = echarts.init(document.getElementById('plot-box'));
+				var plot_data_y = this.tool4_out1_ave.split("\n");
+				var plot_data_x = [];
+				for(var i=0; i<plot_data_y.length; i++){
+					plot_data_x[i] = i+1;
+				}
+      			myBar.setOption(this.option);
+				myBar.setOption({
+					xAxis:{
+						data: plot_data_x
+					},
+					series: [
+						{
+							data: plot_data_y
+						}
+					]
+				});
+				console.log(plot_data_x);
+				console.log(plot_data_y);
+				this.display = 'block';
 			}
+		},
+		mounted () {
+			window.addEventListener('scroll', this.handleScroll, true);
 		}
 	})
 </script>
