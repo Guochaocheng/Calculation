@@ -190,19 +190,19 @@
 												<div class="panel-heading">输出结果</div>
 												<div class="panel-body">
 													<label for="name">列表2-列表1差值 </label>
-													<textarea id="tool4_id1" v-model="tool4_out1" :disabled="tool4_dis1" type="text" class="form-control input-box" rows="6"></textarea>
+													<textarea v-model="tool4_out1" :disabled="tool4_dis1" type="text" class="form-control input-box" rows="6"></textarea>
 													<div class="col-md-6 box-left">
 														<label for="name" class="item-text">列表1的均值， 标准差</label>
-														<textarea id="tool4_id2" v-model="tool4_table1_ave" :disabled="tool4_dis2" type="text" class="form-control input-box" rows="6"></textarea>
+														<textarea v-model="tool4_table1_ave" :disabled="tool4_dis2" type="text" class="form-control input-box" rows="6"></textarea>
 													</div>
 													<div class="col-md-6 box-right">
 														<label for="name" class="item-text">列表2的均值, 标准差</label>
-														<textarea id="tool4_id3" v-model="tool4_table2_ave" :disabled="tool4_dis3" type="text" class="form-control input-box" rows="6"></textarea>
+														<textarea v-model="tool4_table2_ave" :disabled="tool4_dis3" type="text" class="form-control input-box" rows="6"></textarea>
 													</div>
-													<button type="button" class="btn btn-success" style="margin-top:10px;margin-right:10px;" data-clipboard-target="#tool4_id1">Copy1</button>
-													<button type="button" class="btn btn-success" style="margin-top:10px;margin-right:10px;"data-clipboard-target="#tool4_id2">Copy2</button>
-													<button type="button" class="btn btn-success" style="margin-top:10px;margin-right:10px;"data-clipboard-target="#tool4_id3">Copy3</button>
-													<button type="button" class="btn btn-success" style="margin-top:10px;margin-right:10px;">Clear</button>
+													<button type="button" class="btn btn-success" v-clipboard:copy="tool4_out1" v-clipboard:success="onCopy" v-clipboard:error="onError" style="margin-top:10px;margin-right:10px;" >Copy1</button>
+													<button type="button" class="btn btn-success" v-clipboard:copy="tool4_table1_ave" v-clipboard:success="onCopy" v-clipboard:error="onError" style="margin-top:10px;margin-right:10px;" >Copy2</button>
+													<button type="button" class="btn btn-success" v-clipboard:copy="tool4_table2_ave" v-clipboard:success="onCopy" v-clipboard:error="onError" style="margin-top:10px;margin-right:10px;" >Copy3</button>
+													<button type="button" class="btn btn-success" style="margin-top:10px;margin-right:10px;" >Clear</button>
 												</div>
 											</div>									
 										</div>
@@ -548,7 +548,7 @@
 							if( row_data_list[j] == "x" || row_data_list[j] == ""){
 								matrix_data[i][j] = NaN;
 							}else{
-								matrix_data[i][j] = parseInt(row_data_list[j]);
+								matrix_data[i][j] = parseFloat(row_data_list[j]);
 							}
 						}
 						row1 += 1;
@@ -556,15 +556,29 @@
 				}
 				return(matrix_data);
 			},
+			avg_calculate: function(list_data) {
+				var num = 0.0;
+				var sum = 0.0;
+				console.log(list_data.length);
+				for(var i in list_data){
+					sum = sum + list_data[i];
+					num = num + 1;
+					console.log(sum);
+					console.log(num);
+				}
+				return( sum/ num);
+			},
 			desc_data_matrix: function(list_data) {
 				var matrix_data = [];
 				for( var i in list_data){
 					var tmp_data = [];
-					tmp_data.push(d3.mean(list_data[i]));
+					tmp_data.push(d3.mean(list_data[i]).toFixed(1));
+					/*
 					tmp_data.push(d3.min(list_data[i]));
 					tmp_data.push(d3.max(list_data[i]));
 					tmp_data.push(d3.variance(list_data[i]));
 					tmp_data.push(d3.deviation(list_data[i]));
+					*/
 					matrix_data.push(tmp_data.join("\t"));
 				}
 				return(matrix_data.join("\n"));
@@ -589,12 +603,12 @@
 							if( list_data1[i][j] == NaN && list_data2[i][j] == NaN){
 								tmp_data.push(NaN);
 							}else if( list_data1[i][j] == NaN && list_data2[i][j] != NaN){
-								tmp_data.push(list_data2[i][j]);
+								tmp_data.push(list_data2[i][j].toFixed(1));
 							}else if( list_data1[i][j] != NaN && list_data2[i][j] == NaN){
-								tmp_data.push(list_data1[i][j]);
+								tmp_data.push(list_data1[i][j].toFixed(1));
 							}else{
 								var val = list_data2[i][j] - list_data1[i][j];
-								tmp_data.push(val);
+								tmp_data.push(val.toFixed(1));
 							}
 						}
 						diff_data.push(tmp_data.join("\t"));
@@ -616,6 +630,14 @@
 				this.tool4_dis1 = true;
 				this.tool4_dis2 = true;
 				this.tool4_dis3 = true;
+			},
+			/* copy button */
+			onCopy: function (e) {
+				alert('You just copied: ' + e.text);
+			},
+			onError: function (e) {
+				console.log(e);
+				alert('Failed to copy texts!')
 			}
 		}
 	})
