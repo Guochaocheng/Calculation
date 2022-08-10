@@ -3,226 +3,620 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title> GuoChaocheng's Blog </title><META Name="keywords" Content="GCC"/>
-
-   <style type="text/css">
-    .MenuList{ width: 800px; height: 100px;  position: absolute; top:128px; left:100px;}
-    .reverse-box{ width:200px; height:100px; boder:1px; solid #000; float:left; position: absolute; top: 200px; left: 20px}
-    a:hover{ color: red; background-color: #CCCCCC; }
-    #PCR_title{ width:300px; height: 100px; position: absolute; top: 200px; left:600px; }
-    ul{ list-style-type:none; }
-    li{ float:left; }
-    a{ width:80px; height:20px; padding:10px 0; text-align:center; background: #66cc66; display:block; }
-    #search_box{ position: fixed; top: 128px; right:200px; }
-    #id_compine_title{ width:300px; height: 100px; position: absolute; top: 600px; left:20px; } 
-    #footer {	height: 30px; line-height: 40px; left: 0; position: fixed; bottom: 0; width: 100%; text-align: center; background: #333; color: #fff; font-family: Arial; font-size: 12px; letter-spacing: 1px; margin:0 auto;}
-    .bottom{position:absolute;left:0;right:0;bottom:0;height:80px;}
-    #main_content{padding-bottom: 60px;}
-    #wapper{position:relative; height:auto; min-height:100%; }
-		#idbox{ margin-bottom: 1500px;}
-  </style>
-
-<script type="text/javascript">
-/* 01. Reverse sequence tools. */
-function show_info(){
-	var Reverse_string = document.getElementById("Reverse_input").value.toUpperCase();
-	var reverse_str = [];
-	/*window.alert(Reverse_string);*/
-	for(var i=0;i<=Reverse_string.length;i++){
-		if( Reverse_string.charAt(i) == "A"){
-			reverse_str.push("T");
-		}else if( Reverse_string.charAt(i) == "T"){
-			reverse_str.push("A");
-		}else if( Reverse_string.charAt(i) == "G"){
-			reverse_str.push("C");
-		}else if( Reverse_string.charAt(i) == "C"){
-			reverse_str.push("G");
-		}
-	}
-	/*alert(reverse_str);*/
-	document.getElementById("Reverse_output").value= reverse_str.reverse().join("");
-}
-
-/* 02. PCR TM calculate tools. */
-function PCR_calculate(){
-	var PCR_sequence = document.getElementById("PCR_input").value.toUpperCase();
-	var G_num=0; var C_num=0; var A_num=0; var T_num=0;
-	/* if the sequence is empty, sed error. */
-	console.log(PCR_sequence);
-	if( PCR_sequence.length <1 ){	
-		window.alert("The sequence can't be empty");
-	}else{
-		document.getElementById("PCR_length").value = PCR_sequence.length;
-		for(var i=0;i<=PCR_sequence.length;i++){
-			if( PCR_sequence.charAt(i) == "A"){
-					A_num++;
-			}else if( PCR_sequence.charAt(i) == "T" ){
-					T_num++;
-			}else if( PCR_sequence.charAt(i) == "C" ){
-					C_num++;
-			}else if( PCR_sequence.charAt(i) == "G" ){
-					G_num++;
-			}
-		}
-		document.getElementById("PCR_GC").value = (G_num+C_num)/(A_num+T_num+G_num+C_num)*100;
-		document.getElementById("PCR_OD").value = 1000000/(G_num*11.7+C_num*7.3+A_num*15.4+T_num*8.8);
-		document.getElementById("PCR_MW").value = 313.2*A_num+328.2*G_num+289.2*C_num+304.2*T_num-60.96;
-		if( PCR_sequence.length < 14){
-			document.getElementById("PCR_TM").value = 2*(A_num+T_num)+4*(G_num+C_num);
-		}
-		else{
-			document.getElementById("PCR_TM").value = 64.9+41*((G_num+C_num-16.4)/PCR_sequence.length);
-		}
-	}
-}
-
-/* 03.Uniq list script */
-function Directory(StringValue,ncol){
-	var dict={};
-	var StringValue, ncol;
-	var StringList = StringValue.split("\n");
-	for( var Row in StringList ){
-		var StringContent = StringList[Row].split("\t");
-		if( StringContent.length < 1){	continue;	}
-		var key = StringContent[ncol-1];
-		var tmp =[];
-		for(var i=0;i<=StringContent.length;i++){
-			if( i == ncol-1){	continue;	}
-			tmp.push(StringContent[i]);
-		}
-		var value = tmp.join("\t");
-		dict[key] = value;
-	}
-	return dict;
-}
-
-function Uniq_list(){
-	var BoxContent1 = document.getElementById("list_box1").value;
-	var BoxContent2 = document.getElementById("list_box2").value;
-	var idbox_col1 = document.getElementById("list_box1_col").value;
-	var idbox_col2 = document.getElementById("list_box2_col").value;
-	if( BoxContent1.length <1 || BoxContent2.length < 1 || idbox_col1.length < 1 || idbox_col2.length<1 ){
-		window.alert("It can't be empty!");
-	}else{
-		var IDdict1 = Directory(BoxContent1, idbox_col1);
-		var IDdict2 = Directory(BoxContent2, idbox_col2);
-		var CommonBox=[]; var Uniq1Box=[]; var Uniq2Box=[];
-		for(var key in IDdict1){
-			if( IDdict2[key] ){
-				CommonBox.push(key+"\t"+IDdict1[key]+"\t"+IDdict2[key]);
-			}else{
-				Uniq1Box.push(key+"\t"+IDdict1[key]);
-			}
-		}
-		for(var key in IDdict2){
-			if( IDdict1[key] ){	continue;
-			}else{
-				Uniq2Box.push(key+"\t"+IDdict2[key]);
-			}
-		}
-		document.getElementById("list_box_same").value = CommonBox.join("\n");
-		document.getElementById("list_box_diff1").value = Uniq1Box.join("\n");
-		document.getElementById("list_box_diff2").value = Uniq2Box.join("\n");
-	}
-}
-</script>
-
+  <link href="src/css/bootstrap.min.css" rel="stylesheet">
+  <link href="src/css/bootstrap-theme.min.css" rel="stylesheet">
+  <script src="src/js/jquery-1.11.0.min.js"></script>
+  <script src="src/js/vue.js"></script>
+  <script src="src/js/bootstrap.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="src/js/clipboard.min.js"></script>
 </head>
 
-<div id="#wapper">
-<div id="main_content">
-<body background="img/green.jpg"; style="background-repeat:no-repeat; background-attachment:fixed; background-size: 100% 100%">
-<div id="header">
-  <h1>GCC's Tools</h1>
-</div>
- 
-<div id="HeadPhoto">
-<img src="img/headphoto.jpg" style="width:100px; height:100px;" />
-</div>
+<body>
+	<div id="app">
+		<div id="header">
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Bootstrap theme</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Contact</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+						<li><a href="#">Action</a></li>
+						<li><a href="#">Another action</a></li>
+						<li><a href="#">Something else here</a></li>
+						<li role="separator" class="divider"></li>
+						<li class="dropdown-header">Nav header</li>
+						<li><a href="#">Separated link</a></li>
+						<li><a href="#">One more separated link</a></li>
+						</ul>
+					</li>
+					</ul>
+				</div><!--/.nav-collapse -->
+				</div>
+			</nav>
+		</div>
+		<!-- Content of this tools -->
+		<div id="pageContent" >
+			<div class="row">
+				<div class="col-md-12">
+					<div class="container theme-showcase" role="main">
+						<!-- Main jumbotron for a primary marketing message or call to action -->
+						<div class="col-md-12">
+							<div class="jumbotron" style="margin-top: 80px;">
+								<h1>Theme example</h1>
+								<p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
+							</div>
+						</div>
 
-<div class="MenuList">
-<!--<p>Never give up until the end!</p>*/-->
-<ul id="menu_list" >
-<li><a href="https://guochaocheng.github.io" target="_self">首页</a></li>
-<li><a href="https://blog.csdn.net/weixin_43840576" target="_blank">CSDN</a></li>
-<li><a href="https://www.cnblogs.com/" target="_blanK">博客园</a></li>
-<li><a href="http://www.baidu.com" target="_blank">百度一下</a></li>
-<li><a href="http://dailynews.sina.com/gb/" target="_blank">新浪新闻</a></li>
-<li><a href="https://weibo.com/u/3579792124/" target="_blank">新浪微博</a></li>
-<li><a href="https://www.baidu.com/s?wd=天猫">天猫</a></li>
-</ul>
-</div>
+						<div class="col-md-10 box-left">
+							<div id="tools1" class="col-md-12">
+								<div id="reverse-box" class="panel panel-primary">
+									<div class="panel-heading">01. 序列反向互补工具</div>
+									<div class="panel-body">
+										<div class="col-md-3">
+											<div class="grid-content"></div>
+										</div>
+										<form class="col-md-6">
+											<label for="name">Input sequence</label>
+											<textarea v-model="input_reverse_1" type="text" class="form-control input-box" placeholder="请输入需要转化的序列" ></textarea>
+											<label for="name">Results</label>
+											<textarea v-model="out_reverse_1" :disabled="out_disabled_1" type="text" class="form-control input-box" placeholder="输出结果在这..." ></textarea>
+											<button type="button" class="btn btn-success btn-box" @click="reverse_sequence">Reverse Sequences</button>
+											<button type="button" class="btn btn-success btn-box" @click="clear_text1">Clear</button>
+										</form>
+										<div class="col-md-3"></div>
+									</div>
+								</div>
+							</div>
 
-<div class="reverse-box">
-<!--form之间的表单元素,是和服务器交互的数据内容-->
-<h3 id="reverse_title">01.序列反向互补工具</h3>
-	<form name="searchForm" action="url" method="post|get" enctype="multipart/form-data">
-	输入序列:<textarea id="Reverse_input" placeholder="请在此输入序列" style="width: 400px; height: 100px;" ></textarea>
-	输出序列:<textarea id="Reverse_output" style="width: 400px; height: 100px;" ></textarea>
-		<input type="button" onclick="show_info()" value="反向互补"/>
-	</form>
-</div>
+							<div id="tools2" class="col-md-12">
+								<div id="idbox" class="panel panel-primary">
+									<div class="panel-heading">02. PCR引物(核苷酸)计算器</div>
+									<div class="panel-body">
+										<div class="col-md-3">
+											<div class="grid-content"></div>
+										</div>
+										<div class="col-md-6">
+											<label for="name">请在输入框内输入核苷酸序列</label>
+											<textarea id="id_input" v-model="input_sequence_2" type="text" class="form-control input-box" placeholder="请输入需要转化的序列" ></textarea>
+											<button type="button" class="btn btn-success btn-box" @click="calculate_tm">Calculate !</button>
+											<button type="button" class="btn btn-success btn-box" @click="clear_text2">Clear</button>
+											<div class="panel panel-default" >
+												<div class="panel-heading">输出结果</div>
+												<div class="panel-body">
+													<div class="col-md-6 item-text box-left">
+														<label for="name">序列长度 (nt)</label>
+														<input v-model="sequence_length" type="text" class="form-control">
+													</div>
+													<div class="col-md-6 item-text box-right" >
+														<label for="name">退火温度(TM)</label>
+														<input v-model="tm_value" type="text" class="form-control">
+													</div>
+													<div class="col-md-6 item-text box-left">
+													<label for="name">GC含量 %</label>
+													<input v-model="gc_value" type="text" class="form-control">
+													</div>
+													<div class="col-md-6 item-text box-right">
+														<label for="name">分子量 (道尔顿g/M)</label>
+														<input v-model="molecular_value" type="text" class="form-control">
+													</div>
+													<div class="col-md-6 item-text box-left">
+														<label for="name">1个OD260等于...P摩尔数</label>
+														<input v-model="od_value" type="text" class="form-control">
+													</div>
+												</div>
+											</div>									
+										</div>
+										<div class="col-md-3"></div>
+									</div>
+								</div>
+							</div>
 
-<div id="search_box">
-	<form action="https://www.baidu.com/s?" method="get" target="_blank">
-		<input name="wd" id="search" placeholder="天猫" />
-		<button>搜索</button>
-		<!--<input type="text" placeholder="天猫" style="width:150px; height:20px">-->
-		<!--<input type="button" type="submit" value="搜索">-->
-	</form>
-</div>
-	
-<div id="idbox">
-<h3 id="PCR_title">02.PCR引物(核苷酸)计算器</h3>
-  <table border="3" cellspacing="0" style="position:absolute; width:400px; height:300px; top:280px; left:600px; font-family:宋体" >
-	<tr>
-		<th colspan="2" align="middle">请在栏内输入核苷酸序列</th>
-	</tr>
-	<tr>
-		<td colspan="2" algin="middle"><textarea id="PCR_input" style="width:400px; height:100px;" placeholder="请在此输入序列"></textarea></td>
-	</tr>
-	<tr>	
-		<td>序列长度:<input type="text" id="PCR_length" style="width:60px; height:20px"/>nt</td>
-		<td>退火温度(Tm):<input type="text" id="PCR_TM" style="width:60px; height:20px"/>℃</td>
-	</tr>
-	<tr>
-		<td>GC含量%:<input type="text" id="PCR_GC" style="width:60px; height:20px"/></td>
-		<td>分子量:<input type="text" id="PCR_MW" style="width:60px; height:20px"/>道尔顿(g/M)</td>
-	</tr>
-	<tr>
-		<td align="middle"><input type="button" onclick="PCR_calculate()" value="计算" /></td>
-		<td>1个OD260等于<input type="text" id="PCR_OD" style="width:60px; height:20px"/>P摩尔数</td>
-	</tr>
-  </table>
+							<div id="tools3" class="col-md-12">
+								<div id="idbox" class="panel panel-primary">
+									<div class="panel-heading">03. ID同名捕获</div>
+									<div class="panel-body">
+										<div class="col-md-3">
+											<div class="grid-content"></div>
+										</div>
+										<div class="col-md-6">
+											<div class="col-md-6 box-left">
+												<label for="name">列表1</label>
+												<textarea  v-model="tool3_input_table1" type="text" class="form-control input-box" placeholder="请输入列表1" rows="8"></textarea>
+											</div>
+											<div class="col-md-6 box-left">
+												<label for="name">列表2</label>
+												<textarea v-model="tool3_input_table2" type="text" class="form-control input-box" placeholder="请输入列表2" rows="8"></textarea>
+											</div>
+											<label for="name" calss="item-text">列表1的列编号ID</label>
+											<input v-model="tool3_col_id1" type="text" class="form-control" placeholder="表1的列ID" style="width:200px;">
+											<label for="name" calss="item-text">列表2的列编号ID</label>
+											<input v-model="tool3_col_id2" type="text" class="form-control" placeholder="表1的列ID" style="width:200px;">
+											<button type="button" class="btn btn-success btn-box" @click="calculate_common">Calculate !</button>
+											<button type="button" class="btn btn-success btn-box" @click="clear_text3">Clear</button>
+											<div class="panel panel-default" >
+												<div class="panel-heading">输出结果</div>
+												<div class="panel-body">
+													<label for="name">相同的ID </label>
+													<textarea v-model="tool3_common" :disabled="tool3_dis1" type="text" class="form-control input-box" ></textarea>
+													<div class="col-md-6 box-left">
+														<label for="name" class="item-text">列表1特异的ID</label>
+														<textarea v-model="tool3_table1_spe" :disabled="tool3_dis2" type="text" class="form-control input-box" ></textarea>
+													</div>
+													<div class="col-md-6 box-right">
+														<label for="name" class="item-text">列表2特异的ID</label>
+														<textarea v-model="tool3_table2_spe" :disabled="tool3_dis3" type="text" class="form-control input-box" ></textarea>
+													</div>
+												</div>
+											</div>									
+										</div>
+										<div class="col-md-3"></div>
+									</div>
+								</div>
+							</div>
 
-<h3 id="id_compine_title">03.ID同名捕获</h3>
-	<table border="3" cellspacing="0" style="position:absolute; width:800px; height:600px; top:650px; left:20px; font-size:12pt; margin-bottom:70px; font-family:宋体" >
-	<tr>
-		<td colspan="3" align="middle">列表1</td>
-		<td colspan="3" align="middle">列表2</td>
-	</tr>
-	<tr>
-		<td colspan="3" align="middle"><textarea id="list_box1" style="width:400px; height:350px;"></textarea></td>
-		<td colspan="3" align="middle"><textarea id="list_box2" style="width:400px; height:350px;"></textarea></td>
-	</tr>
-	<tr>
-		<td >相同ID</td>
-		<td><textarea id="list_box_same" style="width:250px; height:200px;"></textarea></td>
-		<td>列表1 Uniq</td>
-		<td><textarea id="list_box_diff1" style="width:250px; height:200px;"></textarea></td>
-		<td>列表2 Uniq</td>
-		<td><textarea id="list_box_diff2" style="width:250px; height:200px;"></textarea></td>
-	</tr>
-	<tr>
-		<td>列1</td><td align="left"><input type="text" id="list_box1_col" style="width:150px; height:20px" placeholder="列表1比较的列编号"/></td>
-		<td>列2</td><td align="left"><input type="text" id="list_box2_col" style="width:150px; height:20px" placeholder="列表2比较的列编号"/></td>
-		<td colspan="2" align="middle"><input type="button" onclick="Uniq_list()" value="计算"/></td>
-	</tr>
-	</table>
+							<div id="tools4" class="col-md-12">
+								<div id="idbox" class="panel panel-primary">
+									<div class="panel-heading">04. 两列表求均值、方差、标准差</div>
+									<div class="panel-body">
+										<div class="col-md-3">
+											<div class="grid-content"></div>
+										</div>
+										<div class="col-md-6">
+											<div class="col-md-6 box-left">
+												<label for="name">列表1</label>
+												<textarea v-model="tool4_input_table1" type="text" class="form-control input-box" placeholder="请输入列表1" rows="6"></textarea>
+											</div>
+											<div class="col-md-6 box-left">
+												<label for="name">列表2</label>
+												<textarea v-model="tool4_input_table2" type="text" class="form-control input-box" placeholder="请输入列表2" rows="6"></textarea>
+											</div>
+											<button type="button" class="btn btn-success btn-box" @click="calculate_ave_value">Calculate !</button>
+											<button type="button" class="btn btn-success btn-box" @click="clear_text4">Clear</button>
+											<div class="panel panel-default" >
+												<div class="panel-heading">输出结果</div>
+												<div class="panel-body">
+													<label for="name">列表2-列表1差值 </label>
+													<textarea id="tool4_id1" v-model="tool4_out1" :disabled="tool4_dis1" type="text" class="form-control input-box" rows="6"></textarea>
+													<div class="col-md-6 box-left">
+														<label for="name" class="item-text">列表1的均值， 标准差</label>
+														<textarea id="tool4_id2" v-model="tool4_table1_ave" :disabled="tool4_dis2" type="text" class="form-control input-box" rows="6"></textarea>
+													</div>
+													<div class="col-md-6 box-right">
+														<label for="name" class="item-text">列表2的均值, 标准差</label>
+														<textarea id="tool4_id3" v-model="tool4_table2_ave" :disabled="tool4_dis3" type="text" class="form-control input-box" rows="6"></textarea>
+													</div>
+													<button type="button" class="btn btn-success" style="margin-top:10px;margin-right:10px;" data-clipboard-target="#tool4_id1">Copy1</button>
+													<button type="button" class="btn btn-success" style="margin-top:10px;margin-right:10px;"data-clipboard-target="#tool4_id2">Copy2</button>
+													<button type="button" class="btn btn-success" style="margin-top:10px;margin-right:10px;"data-clipboard-target="#tool4_id3">Copy3</button>
+													<button type="button" class="btn btn-success" style="margin-top:10px;margin-right:10px;">Clear</button>
+												</div>
+											</div>									
+										</div>
+										<div class="col-md-3"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 box-left">
+							<div class="panel panel-info link-box">
+								<div class="panel-heading">
+									<h3 class="panel-title">Links</h3>
+								</div>
+								<div class="panel-body">
+									<ul style="padding-left: 20px;">
+										<li  v-for="item in linkData" ><a :href="item.url" >{{item.name}}</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">CopyRight@GCC2019</div>
 	</div>
-</div>
-
-<div id="footer">CopyRight@GCC2019</div>
-</div>
 </body>
-
 </html>
+
+
+<style type="text/css">
+#app {
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+}
+#pageContent {
+	margin-left: 150px;
+	margin-right: 150px;
+	min-height: 2000px;
+}
+.input-box {
+	min-height: 100px;
+}
+.btn-box {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-right: 20px;
+}
+#result-title {
+	font-size: 15pt;
+}
+.box-left {
+	padding-left: 0px;
+}
+.box-right {
+	padding-right: 0px;
+}
+.item-text {
+	margin-top: 5px;
+}
+.btn-box {
+	margin-left: 0px;
+	margin-right: 30px;
+}
+.link-box {
+	background-color: #fff7f7;
+}
+</style>
+
+<script type="text/javascript">
+	/* 03.Uniq list script */
+	function Directory(StringValue,ncol){
+		var dict={};
+		var StringValue, ncol;
+		var StringList = StringValue.split("\n");
+		for( var Row in StringList ){
+			var StringContent = StringList[Row].split("\t");
+			if( StringContent.length < 1){	continue;	}
+			var key = StringContent[ncol-1];
+			var tmp =[];
+			for(var i=0;i<=StringContent.length;i++){
+				if( i == ncol-1){	continue;	}
+				tmp.push(StringContent[i]);
+			}
+			var value = tmp.join("\t");
+			dict[key] = value;
+		}
+		return dict;
+	}
+	
+	function Uniq_list(){
+		var BoxContent1 = document.getElementById("list_box1").value;
+		var BoxContent2 = document.getElementById("list_box2").value;
+		var idbox_col1 = document.getElementById("list_box1_col").value;
+		var idbox_col2 = document.getElementById("list_box2_col").value;
+		if( BoxContent1.length <1 || BoxContent2.length < 1 || idbox_col1.length < 1 || idbox_col2.length<1 ){
+			window.alert("It can't be empty!");
+		}else{
+			var IDdict1 = Directory(BoxContent1, idbox_col1);
+			var IDdict2 = Directory(BoxContent2, idbox_col2);
+			var CommonBox=[]; var Uniq1Box=[]; var Uniq2Box=[];
+			for(var key in IDdict1){
+				if( IDdict2[key] ){
+					CommonBox.push(key+"\t"+IDdict1[key]+"\t"+IDdict2[key]);
+				}else{
+					Uniq1Box.push(key+"\t"+IDdict1[key]);
+				}
+			}
+			for(var key in IDdict2){
+				if( IDdict1[key] ){	continue;
+				}else{
+					Uniq2Box.push(key+"\t"+IDdict2[key]);
+				}
+			}
+			document.getElementById("list_box_same").value = CommonBox.join("\n");
+			document.getElementById("list_box_diff1").value = Uniq1Box.join("\n");
+			document.getElementById("list_box_diff2").value = Uniq2Box.join("\n");
+		}
+	}
+
+	/* 04. DNA reverse complement tools. */
+	new Vue ({
+		el: '#pageContent',
+		data () {
+			return {
+				linkData: [
+					{
+						url: 'https://blog.csdn.net/weixin_43840576',
+						name: 'CSDN'
+					},
+					{
+						url: 'https://www.cnblogs.com/',
+						name: '博客园'
+					},
+					{
+						url: 'http://www.baidu.com',
+						name: '百度一下'
+					},
+					{
+						url: 'http://dailynews.sina.com/gb/',
+						name: '新浪微博'
+					},
+					{
+						url: 'https://www.baidu.com/s?wd=天猫',
+						name: '天猫'
+					}
+				],
+				/* tools 1 */
+				input_reverse_1: '',
+				out_reverse_1: '',
+				out_disabled_1: true,
+				/* tools 1 */
+				input_sequence_2: '',
+				sequence_length: '',
+				tm_value: '',
+				gc_value: '',
+				molecular_value: '',
+				od_value: '',
+				/* tools 3 */
+				tool3_input_table1: '',
+				tool3_input_table2: '',
+				tool3_col_id1: 1,
+				tool3_col_id2: 1,
+				tool3_common: '',
+				tool3_table_common: '',
+				tool3_table1_spe: '',
+				tool3_table2_spe: '',
+				tool3_dis1: true,
+				tool3_dis2: true,
+				tool3_dis3: true,
+				/* tools 3 */
+				tool4_input_table1: '',
+				tool4_input_table2: '',
+				tool4_out1: '',
+				tool4_table1_ave: '',
+				tool4_table2_ave: '',
+				tool4_dis1: true,
+				tool4_dis2: true,
+				tool4_dis3: true
+			}
+		},
+		methods: {
+			/* tools1: reverse the sequence of ATCG*/
+			reverse_sequence (){
+				console.log(this.input_reverse_1)
+				var input_sequence = this.input_reverse_1;
+				var reverse_sequence_list = [];
+				var flag = 1;
+				/*window.alert(Reverse_string);*/
+				for(var i=0; i<input_sequence.length; i++){
+					if( input_sequence.charAt(i) == "A"){
+						reverse_sequence_list.push("T");
+					}else if( input_sequence.charAt(i) == "T"){
+						reverse_sequence_list.push("A");
+					}else if( input_sequence.charAt(i) == "G"){
+						reverse_sequence_list.push("C");
+					}else if( input_sequence.charAt(i) == "C"){
+						reverse_sequence_list.push("G");
+					}else{
+						alert("Please input DNA sequence! It must be A/T/C/G.");
+						flag = 0;
+						break;
+					}
+				}
+				this.out_reverse_1 = reverse_sequence_list.reverse().join("");
+				if( flag == 1){
+					this.out_disabled_1 = false;
+				}
+			},
+			clear_text1 () {
+				this.input_reverse_1 = '';
+				this.out_reverse_1 = '';
+				this.out_disabled_1 = true;
+			},
+			/* tools1: reverse the TM parameter of sequence of ATCG */
+			calculate_tm () {
+				var pcr_seq = this.input_sequence_2.toUpperCase();
+				var G_num=0; var C_num=0; var A_num=0; var T_num=0;
+				/* if the sequence is empty, sed error. */
+				if( pcr_seq.length <1 ){	
+					window.alert("The sequence can't be empty");
+				}else{
+					flag = 1;
+					for(var i=0; i<pcr_seq.length; i++){
+						if( pcr_seq.charAt(i) == "A"){
+							A_num++;
+						}else if( pcr_seq.charAt(i) == "T" ){
+							T_num++;
+						}else if( pcr_seq.charAt(i) == "C" ){
+							C_num++;
+						}else if( pcr_seq.charAt(i) == "G" ){
+							G_num++;
+						}else{
+							console.log(pcr_seq.length);
+							console.log(pcr_seq.charAt(i));
+							console.log(pcr_seq.charAt(3));
+							alert("Please input DNA sequence! It must be A/T/C/G.");
+							flag = 0;
+							break;
+						}
+					}
+					if( flag  == 1){
+						this.sequence_length = pcr_seq.length;
+						this.gc_value = (G_num+C_num)/this.sequence_length *100;
+						this.od_value = 1000000/(G_num*11.7+C_num*7.3+A_num*15.4+T_num*8.8);
+						this.molecular_value = 313.2*A_num+328.2*G_num+289.2*C_num+304.2*T_num-60.96;
+
+						if( this.sequence_length < 14){
+							this.tm_value = 2*(A_num+T_num)+4*(G_num+C_num);
+						}else{
+							this.tm_value = 64.9+41*((G_num+C_num-16.4)/this.sequence_length);
+						}
+						this.gc_value = this.gc_value.toFixed(2);
+						this.od_value = this.od_value.toFixed(2);
+						this.molecular_value = this.molecular_value.toFixed(2);
+						this.tm_value = this.tm_value.toFixed(2);
+					}else{
+						alert("Please check your sequence! It must be A/T/C/G.");
+					}
+				}
+			},
+			clear_text2 () {
+				this.input_sequence_2 = '';
+				this.gc_value = '';
+				this.od_value = '';
+				this.molecular_value = '';
+				this.tm_value = '';
+			},
+			/* tools3: two list for uniq and common id */
+			store_dict_data: function(list_data, ncol) {
+				var list_data_dict = {};
+				list_data = list_data.split("\n");
+				var min_length = list_data[0].split("\t");
+				flag = 1;
+				console.log(min_length.length);
+				console.log(ncol);
+				if( ncol > min_length.length){
+					alert("The setting of number of columns is larger than the number of columns in the first line!");
+					return null;
+				}else{
+					for( var row in list_data){
+						row_data = list_data[row].split("\t");
+						if( row_data.length == min_length.length){
+							list_data_dict[row_data[ncol-1]] = 1;
+						}
+					}
+					return list_data_dict;
+				}	
+			},
+			calculate_common () {
+				if( this.tool3_input_table1.length < 1 || this.tool3_input_table1.length < 1){
+					alert("Please input two list!");
+				}
+				var list_data1 = this.$options.methods.store_dict_data(this.tool3_input_table1, this.tool3_col_id1);
+				var list_data2 = this.$options.methods.store_dict_data(this.tool3_input_table2, this.tool3_col_id2);
+				/* for each in list */
+				if( list_data1 != null && list_data2 != null){
+					var common_list = [];
+					var table1_spe_list = [];
+					var table2_spe_list = [];
+					for( var key in list_data1){
+						if( list_data2[key] ){
+							common_list.push(key);
+						}else{
+							table1_spe_list.push(key);
+						}
+					}
+					for( var key in list_data2){
+						if( !list_data1[key] ){
+							table2_spe_list.push(key);
+						}
+					}
+					this.tool3_common = common_list.join("\n");
+					this.tool3_table1_spe = table1_spe_list.join("\n");
+					this.tool3_table2_spe = table2_spe_list.join("\n");
+
+					this.tool3_dis1 = false;
+					this.tool3_dis2 = false;
+					this.tool3_dis3 = false;
+				}
+			},
+			clear_text3 () {
+				this.tool3_input_table1 = '';
+				this.tool3_input_table2 = '';
+				this.tool3_common = '';
+				this.tool3_table2_spe = '';
+				this.tool3_dis1 = true;
+				this.tool3_dis2 = true;
+				this.tool3_dis3 = true;
+			},
+			/* tool4: calculate two list for average and standard deviation */
+			store_data_matrix: function(list_data) {
+				var row1 = 0;
+				var row_data = list_data.split("\n");
+				var col1 = row_data[0].split("\t").length;
+				var matrix_data = new Array();
+				for( var i in row_data){
+					row_data_list = row_data[i].split("\t");
+					if( row_data_list.length > 1 ){
+						matrix_data[i] = new Array();
+						for(var j in row_data_list){
+							if( row_data_list[j] == "x" || row_data_list[j] == ""){
+								matrix_data[i][j] = NaN;
+							}else{
+								matrix_data[i][j] = parseInt(row_data_list[j]);
+							}
+						}
+						row1 += 1;
+					}
+				}
+				return(matrix_data);
+			},
+			desc_data_matrix: function(list_data) {
+				var matrix_data = [];
+				for( var i in list_data){
+					var tmp_data = [];
+					tmp_data.push(d3.mean(list_data[i]));
+					tmp_data.push(d3.min(list_data[i]));
+					tmp_data.push(d3.max(list_data[i]));
+					tmp_data.push(d3.variance(list_data[i]));
+					tmp_data.push(d3.deviation(list_data[i]));
+					matrix_data.push(tmp_data.join("\t"));
+				}
+				return(matrix_data.join("\n"));
+			},
+			calculate_ave_value () {
+				if( this.tool4_input_table1.length < 1 || this.tool4_input_table2.length < 1){
+					alert("Please input two list!");
+				}
+				var list_data1 = this.$options.methods.store_data_matrix(this.tool4_input_table1);
+				var list_data2 = this.$options.methods.store_data_matrix(this.tool4_input_table2);
+				row1 = list_data1.length;
+				col1 = list_data1[0].length;
+				row2 = list_data2.length;
+				col2 = list_data2[0].length;
+				if(row1 != row2 || col1 != col2){
+					alert("The two list are not the same!");
+				}else{
+					var diff_data = [];
+					for(var i=0; i<row1; i++){
+						var tmp_data = [];
+						for(var j=0; j<col1; j++){
+							if( list_data1[i][j] == NaN && list_data2[i][j] == NaN){
+								tmp_data.push(NaN);
+							}else if( list_data1[i][j] == NaN && list_data2[i][j] != NaN){
+								tmp_data.push(list_data2[i][j]);
+							}else if( list_data1[i][j] != NaN && list_data2[i][j] == NaN){
+								tmp_data.push(list_data1[i][j]);
+							}else{
+								var val = list_data1[i][j] - list_data2[i][j];
+								tmp_data.push(val);
+							}
+						}
+						diff_data.push(tmp_data.join("\t"));
+					}
+					this.tool4_out1 = diff_data.join("\n");
+					this.tool4_table1_ave = this.$options.methods.desc_data_matrix(list_data1);
+					this.tool4_table2_ave = this.$options.methods.desc_data_matrix(list_data2);
+					this.tool4_dis1 = false;
+					this.tool4_dis2 = false;
+					this.tool4_dis3 = false;
+				}
+			},
+			clear_text4 () {
+				this.tool4_input_table1 = '';
+				this.tool4_input_table2 = '';
+				this.tool4_out1 = '';
+				this.tool4_table1_ave = '';
+				this.tool4_table2_ave = '';
+				this.tool4_dis1 = true;
+				this.tool4_dis2 = true;
+				this.tool4_dis3 = true;
+			}
+		}
+	})
+</script>
